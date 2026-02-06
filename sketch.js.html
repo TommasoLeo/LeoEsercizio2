@@ -1,0 +1,63 @@
+// coordinate normalizzate della T
+const T = [
+	0, 0,
+	10, 0,
+	10, 2,
+	6, 2,
+	6, 10,
+	4, 10,
+	4, 2,
+	0, 2
+]
+
+// coordinate normalizzate della L
+const L = [
+	0, 0,
+	2, 0,
+	2, 8,
+	8, 8,
+	8, 10,
+	0, 10
+]
+
+function setup() {
+	let canvas = createCanvas(400, 400)
+	canvas.parent("sketch-holder")
+	noFill()
+}
+
+function draw() {
+	background(15)
+	stroke(230)
+	strokeWeight(1)
+
+	const num = 60
+
+	for (let i = 0; i < num; i++) {
+		push()
+		translate(width / 2, height / 2)
+
+		// rotazione morbida come nell'esercizio originale
+		rotate(sin((frameCount + i) * 0.03) * 0.6)
+
+		const s = 12 + num - i * 0.9
+
+		// lettera T
+		drawLetter(T, -60, -20, s)
+
+		// lettera L
+		drawLetter(L, 20, -20, s)
+
+		pop()
+	}
+}
+
+function drawLetter(shape, ox, oy, scaleFactor) {
+	beginShape()
+	for (let i = 0; i < shape.length; i += 2) {
+		const x = (shape[i] - 5) * scaleFactor + ox
+		const y = (shape[i + 1] - 5) * scaleFactor + oy
+		vertex(x, y)
+	}
+	endShape(CLOSE)
+}
